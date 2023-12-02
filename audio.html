@@ -10,14 +10,14 @@
 <body id="">
     <div class="container">
         <div class="row">
-            <div class="col-8 mt-5 mx-auto shadow p-3 m-5" id="fleshs">
+            <div class="col-8 mt-5 mx-auto shadow p-3 m-5" style="border-radius: 30px;" id="fleshs">
                 <h1>Text to Audio</h1> <hr>
                 <input type="text" name="" class="form-control mb-3" id="enterText" placeholder="input text here"><br>
                 <button id="speakBtn" class="btn btn-danger">Speak!</button>
             </div> 
         </div>
         <div class="row">
-            <div class="col-8 mt-5 mx-auto shadow p-3 m-5" id="flesh">
+            <div class="col-8 mt-5 mx-auto shadow p-3 m-5" style="border-radius: 20px;" id="flesh">
                 <h1>Speech to Text</h1> <hr>
                 <textarea class="form-control mb-3" id="converted">
                     
@@ -27,6 +27,17 @@
                 <button id="speechBtn" class="btn btn-secondary">Listen!</button>
             </div>  
         </div>
+        <div class="row">
+            <div class="col-8 mt-5 mx-auto shadow p-3 m-5" style="border-radius: 30px;" id="fleshss">
+                <h1>play Audio</h1> <hr>
+                <!-- <input type="text" name="" class="form-control mb-3" id="playMusic" placeholder="input text here"><br> -->
+                <button onclick="playAudio()" class="btn btn-info">Play!</button>
+                <button onclick="pauseAudio()" class="btn btn-warning">Pause!</button><br>
+                <button onclick="stopAudio()" class="btn btn-danger">Stop!</button>
+
+
+            </div> 
+        </div>
     </div>
     <script>
         // var new = document.getElementById('enterText').value
@@ -34,7 +45,7 @@
         speakBtn.addEventListener('click',()=>{
             var msg = new SpeechSynthesisUtterance();
             var voices = speechSynthesis.getVoices();
-            // console.log(voices);
+            console.log(voices);
 
             msg.voice = voices[2];
             msg.volume = 1;
@@ -51,6 +62,20 @@
         // } else {
         //     alert('window not sopprted')
         // }
+        var music = new Audio("music/Trenches.mp3");
+        function playAudio() {
+            music.play();
+            music.loop = true;
+        }
+        function pauseAudio() {
+            music.pause();
+        }
+        function stopAudio() {
+            music.pause();
+            music.currentTime = 0
+        }
+
+
         speechBtn.addEventListener('click', ()=>{
             var SpeechRecognition = window.SpeechRecognition || webkitSpeechRecognition;
             var recognition = new SpeechRecognition();
@@ -64,11 +89,17 @@
             recognition.onresult = function(event){
                 console.log(event);
                 converted.innerHTML +=" " + event.results[0][0].transcript;
-                // fleshs.style.backgroundColor = event.results[0][0].transcript;
-                // flesh.style.backgroundColor = event.results[0][0].transcript;
+                fleshs.style.backgroundColor = event.results[0][0].transcript;
+                flesh.style.backgroundColor = event.results[0][0].transcript;
 
             }
+
+                // if (event.results[0][0].transcript == "play forever") {
+                //    playAudio() 
+                // }
         })
+
+        
 
         // function speak() {
         //     var msg = new SpeechSynthesisUtterance();
